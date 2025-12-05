@@ -73,30 +73,10 @@
         .chart-container { position: relative; height: 400px; width: 100%; }
         .table-responsive { max-height: 400px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px; }
         
-        .list-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-top: 30px; 
-            margin-bottom: 12px; 
-            width: 100%;
-        }
-        
-        .list-header h3 { 
-            margin: 0; 
-            white-space: nowrap; 
-            flex-shrink: 0; 
-            margin-right: 15px; 
-            font-size: 1.1em;
-        }
-
-        #historyFilterSelect {
-            flex-grow: 1;
-            min-width: 0;
-            width: auto;
-            max-width: 60%;
-            padding: 10px;
-        }
+        /* 히스토리 필터 헤더 */
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 12px; width: 100%; }
+        .list-header h3 { margin: 0; white-space: nowrap; flex-shrink: 0; margin-right: 15px; font-size: 1.1em; }
+        #historyFilterSelect { flex-grow: 1; min-width: 0; width: auto; max-width: 60%; padding: 10px; }
 
         /* 계산기 스타일 */
         .calc-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
@@ -136,35 +116,17 @@
         .current-level-title { font-size: 0.9em; color: #27ae60; font-weight: bold; margin-bottom: 4px; }
         .current-level-value { font-size: 1.4em; font-weight: bold; color: #219150; }
 
-        /* [추가] 접기/펼치기 관련 스타일 */
-        .toggle-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-        }
-        .toggle-icon {
-            font-size: 0.8em;
-            color: #7f8c8d;
-            transition: transform 0.3s;
-        }
-        .toggle-content {
-            display: none; /* 기본적으로 숨김 */
-            margin-top: 15px;
-            animation: fadeIn 0.3s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        /* 접기/펼치기 관련 스타일 */
+        .toggle-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; }
+        .toggle-icon { font-size: 0.8em; color: #7f8c8d; transition: transform 0.3s; }
+        .toggle-content { display: none; margin-top: 15px; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <div class="container">
         <div style="text-align:center; margin-bottom:20px; padding-top:10px;">
-            <h1 style="margin:0; font-size:1.6em; color:#2c3e50;">💊 펩타이드 매니저 (웹 버전)</h1>
-            <span style="font-size:0.85em; color:#7f8c8d;">자동 저장 활성화됨</span>
+            <h1 style="margin:0; font-size:1.6em; color:#2c3e50;">💊 펩타이드 매니저</h1>
         </div>
         
         <div class="tabs">
@@ -176,7 +138,7 @@
         <div id="manage" class="tab-content active">
             <div class="card">
                 <div class="toggle-header" onclick="toggleSection('drugRegisterContent', 'drugArrow')">
-                    <h2 style="border:none; margin:0;">1. 약물 등록 (설정)</h2>
+                    <h2 style="border:none; margin:0;">1. 펩타이드 등록</h2>
                     <span id="drugArrow" class="toggle-icon">▼</span>
                 </div>
                 
@@ -184,15 +146,15 @@
                     <div style="border-top: 2px solid #f5f7fa; padding-top: 15px; margin-bottom: 15px;"></div>
                     <div class="form-row">
                         <div class="form-group" style="flex: 2;">
-                            <label>약물명</label>
-                            <input type="text" id="drugName" placeholder="예: Mounjaro">
+                            <label>펩타이드명</label>
+                            <input type="text" id="drugName" placeholder="예: Tirzepatide">
                         </div>
                         <div class="form-group">
                             <label>단위</label>
                             <select id="drugUnit">
                                 <option value="mg">mg</option>
                                 <option value="mcg">mcg</option>
-                                <option value="IU">IU</option>
+                                <option value="U">U</option>
                             </select>
                         </div>
                     </div>
@@ -206,11 +168,11 @@
                             <input type="text" id="drugNote" placeholder="설명">
                         </div>
                     </div>
-                    <button class="action-btn" onclick="addDrug()">약물 추가하기</button>
+                    <button class="action-btn" onclick="addDrug()">펩타이드 추가하기</button>
                     
                     <div class="table-responsive" style="margin-top:15px;">
                         <table id="drugTable">
-                            <thead><tr><th>약물명</th><th>정보</th><th>삭제</th></tr></thead>
+                            <thead><tr><th>펩타이드명</th><th>정보</th><th>삭제</th></tr></thead>
                             <tbody></tbody>
                         </table>
                     </div>
@@ -221,7 +183,7 @@
                 <h2>2. 투여 기록 입력</h2>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>약물 선택</label>
+                        <label>펩타이드 선택</label>
                         <select id="logDrugSelect" onchange="updateDoseLabel()"></select>
                     </div>
                     <div class="form-group">
@@ -230,7 +192,7 @@
                     </div>
                     <div class="form-group">
                         <label>부위</label>
-                        <input type="text" id="logSite" placeholder="예: 복부">
+                        <input type="text" id="logSite" placeholder="예: 복부상단">
                     </div>
                 </div>
                 <div class="form-row">
@@ -275,9 +237,9 @@
             <div class="card">
                 <h2>📈 체내 농도 분석</h2>
                 <div class="form-group" style="margin-bottom:15px;">
-                    <label>분석할 약물</label>
+                    <label>분석할 펩타이드</label>
                     <select id="graphDrugSelect" onchange="renderChart()" style="background-color: #e8f8f5; border-color: #27ae60; font-weight: bold;">
-                        <option value="">-- 약물 선택 --</option>
+                        <option value="">-- 펩타이드 선택 --</option>
                     </select>
                     
                     <div id="currentLevelBox" class="current-level-box">
@@ -287,10 +249,15 @@
                 </div>
                 
                 <div class="form-row">
-                    <div class="form-group"><label>시작</label><input type="date" id="graphStartDate"></div>
-                    <div class="form-group"><label>종료</label><input type="date" id="graphEndDate"></div>
+                    <div class="form-group">
+                        <label>시작</label>
+                        <input type="date" id="graphStartDate" onchange="renderChart()">
+                    </div>
+                    <div class="form-group">
+                        <label>종료</label>
+                        <input type="date" id="graphEndDate" onchange="renderChart()">
+                    </div>
                 </div>
-                <button class="action-btn" onclick="renderChart()" style="margin-top:5px; height:50px;">그래프 새로고침</button>
                 <div class="chart-container" style="margin-top:20px;"><canvas id="stackChart"></canvas></div>
             </div>
         </div>
@@ -303,25 +270,25 @@
                 <div class="section-title" style="font-weight:bold; color:#555; margin-bottom:12px; font-size:1.1em;">1. 재구성 조건</div>
                 <div class="calc-grid">
                     <div class="calc-card">
-                        <div class="label">펩타이드 양 (mg)</div>
+                        <div class="label">바이알의 펩타이드 양 (mg)</div>
                         <div class="pill-row" data-group="peptide">
-                            <div class="pill" data-value="5">5</div>
                             <div class="pill" data-value="10">10</div>
-                            <div class="pill" data-value="15">15</div>
+                            <div class="pill" data-value="30">30</div>
+                            <div class="pill" data-value="60">60</div>
                             <div class="pill" data-value="custom">입력</div>
                         </div>
                         <input type="number" id="peptideMg" placeholder="예: 10">
                     </div>
                     <div class="calc-card">
-                        <div class="label">BAC water (mL)</div>
+                        <div class="label">투입할 BAC water 양 (mL)</div>
                         <div class="pill-row" data-group="water">
-                            <div class="pill" data-value="1">1</div>
-                            <div class="pill" data-value="2">2</div>
-                            <div class="pill" data-value="3">3</div>
+                            <div class="pill" data-value="1.8">1.8</div>
+                            <div class="pill" data-value="2.4">2.4</div>
+                            <div class="pill" data-value="3.0">3.0</div>
                             <div class="pill" data-value="custom">입력</div>
                         </div>
                         <input type="number" id="waterMl" placeholder="예: 2">
-                        <div class="muted" id="waterCcText"></div>
+                        <div class="muted" id="waterCcText" style="color:#27ae60; font-weight:bold;"></div>
                     </div>
                     <div class="calc-card">
                         <div class="label">1회 투여량 (mcg)</div>
@@ -362,20 +329,23 @@
                         <div class="form-group">
                             <label>화폐</label>
                             <select id="currencyUnit">
-                                <option value="">안함</option>
-                                <option value="KRW">원</option>
-                                <option value="USD">달러</option>
+                                <option value="">선택 안함</option>
+                                <option value="KRW">원 (KRW)</option>
+                                <option value="USD">달러 (USD)</option>
                             </select>
                         </div>
-                        <div class="form-group" style="flex:2;">
-                            <label>가격</label>
-                            <input type="number" id="peptidePrice" placeholder="금액">
+                        <div class="form-group">
+                            <label>가격 기준</label>
+                             <select id="peptidePriceType">
+                                <option value="vial">1 바이알</option>
+                                <option value="kit">1 키트(10바이알)</option>
+                            </select>
                         </div>
                      </div>
-                     <select id="peptidePriceType" style="margin-top:5px;">
-                        <option value="vial">1 바이알 당 가격</option>
-                        <option value="kit">1 키트(10병) 당 가격</option>
-                    </select>
+                     <div class="form-group" style="margin-top:10px;">
+                        <label>금액 입력</label>
+                        <input type="number" id="peptidePrice" placeholder="금액을 입력하세요 (숫자)">
+                    </div>
                 </div>
 
                 <div class="calc-btn-row">
@@ -391,18 +361,19 @@
                             <div class="muted" id="concMcgMl">-</div>
                         </div>
                         <div class="output-box">
-                            <div class="output-title">1회 부피</div>
+                            <div class="output-title">1회 투여 부피</div>
                             <div class="output-value" id="volMl">-</div>
-                            <div class="muted">mL</div>
+                            <div class="muted" id="volCc">-</div>
                         </div>
                         <div class="output-box">
-                            <div class="output-title">인슐린 펜 (UI)</div>
+                            <div class="output-title">인슐린 주사 단위 (U)</div>
                             <div class="output-value" id="uiUnits">-</div>
-                            <div class="muted">U-100</div>
+                            <div class="muted">1클릭=1U</div>
                         </div>
                         <div class="output-box">
-                            <div class="output-title">사용 기간</div>
+                            <div class="output-title">바이알 사용 기간</div>
                             <div class="output-value" id="vialUsage">-</div>
+                            <div class="muted" id="vialRemain" style="color:#e74c3c; font-size:0.85em; margin-top:4px;"></div>
                         </div>
                     </div>
                     <div class="warning-text" id="penWarning" style="display:none; text-align:center; margin-top:10px;"></div>
@@ -437,7 +408,7 @@
             updateUI();
         }
 
-        // ================= UI 토글 로직 (추가됨) =================
+        // ================= UI 토글 로직 =================
         function toggleSection(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
@@ -528,7 +499,7 @@
             const unit = document.getElementById('drugUnit').value;
             const halfLife = parseFloat(document.getElementById('drugHalfLife').value);
             const note = document.getElementById('drugNote').value;
-            if (!name || isNaN(halfLife)) return alert("약물명과 반감기는 필수입니다.");
+            if (!name || isNaN(halfLife)) return alert("펩타이드명과 반감기는 필수입니다.");
             drugs.push({ id: Date.now(), name: name, unit: unit, halfLife: halfLife, note: note });
             saveData();
             updateUI();
@@ -551,7 +522,7 @@
             const site = document.getElementById('logSite').value;
             const date = document.getElementById('logDate').value;
             const time = document.getElementById('logTime').value;
-            if (!drugId || isNaN(dose)) return alert("약물과 용량을 확인하세요.");
+            if (!drugId || isNaN(dose)) return alert("펩타이드와 용량을 확인하세요.");
             const drug = drugs.find(d => d.id == drugId);
             logs.push({
                 id: Date.now(),
@@ -600,7 +571,7 @@
             const prevFilter = filterSelect.value;
 
             logSelect.innerHTML = '<option value="">선택하세요</option>';
-            graphSelect.innerHTML = '<option value="">-- 약물 선택 --</option>';
+            graphSelect.innerHTML = '<option value="">-- 펩타이드 선택 --</option>';
             filterSelect.innerHTML = '<option value="all">전체 기록</option>';
 
             drugs.forEach(d => {
@@ -703,6 +674,7 @@
                     },
                     interaction: { mode: 'nearest', axis: 'x', intersect: false },
                     plugins: {
+                        legend: { display: false },
                         tooltip: {
                             mode: 'index',
                             intersect: false,
@@ -756,7 +728,8 @@
         function updateDoseMg() {
             const v = parseFloat(document.getElementById('doseMcg').value);
             const t = document.getElementById('doseMgText');
-            if(v > 0) t.textContent = `(${v/1000} mg)`;
+            // 수정됨: 괄호 제거
+            if(v > 0) t.textContent = `${v/1000} mg`;
             else t.textContent = '';
         }
 
@@ -773,9 +746,14 @@
             document.getElementById('calcErrorBox').style.display='none';
             document.getElementById('concMgMl').textContent = '-';
             document.getElementById('concMcgMl').textContent = '-';
+            
+            // 수정됨: 초기화 로직
             document.getElementById('volMl').textContent = '-';
+            document.getElementById('volCc').textContent = '-';
+            
             document.getElementById('uiUnits').textContent = '-';
             document.getElementById('vialUsage').textContent = '-';
+            document.getElementById('vialRemain').textContent = ''; 
             document.getElementById('doseMgText').textContent = '';
             document.getElementById('monthlyCostBox').style.display = 'none';
         });
@@ -804,13 +782,17 @@
 
             document.getElementById('concMgMl').textContent = `${concMg.toFixed(2)} mg/mL`;
             document.getElementById('concMcgMl').textContent = `${concMcg.toFixed(0)} mcg/mL`;
-            document.getElementById('volMl').textContent = vol.toFixed(3); 
-            document.getElementById('uiUnits').textContent = `${ui.toFixed(1)} UI`;
+            
+            // 수정됨: mL과 cc 단위 분리 및 표기
+            document.getElementById('volMl').textContent = `${vol.toFixed(3)} mL`; 
+            document.getElementById('volCc').textContent = `${vol.toFixed(3)} cc`;
+
+            document.getElementById('uiUnits').textContent = `${ui.toFixed(1)} U`;
 
             const warning = document.getElementById('penWarning');
             if(ui > 60) {
                 warning.style.display = 'block';
-                warning.textContent = `⚠ 60 UI 초과 (약 ${Math.ceil(ui/60)}회로 나누어 주사)`;
+                warning.textContent = `⚠ 60 U 초과 (약 ${Math.ceil(ui/60)}회로 나누어 주사)`;
             } else {
                 warning.style.display = 'none';
             }
@@ -819,9 +801,16 @@
             const doses = Math.floor(totalMcg / dMcg);
             const rawDuration = doses * iCount / iTimes;
             const unitText = iUnit === 'day' ? '일' : '주';
-            const remain = totalMcg - (doses * dMcg);
             
             document.getElementById('vialUsage').textContent = `${Math.floor(rawDuration)}${unitText}`;
+            
+            const remain = totalMcg - (doses * dMcg);
+            const remainBox = document.getElementById('vialRemain');
+            if (remain > 0) {
+                remainBox.textContent = `(잔여: ${Math.round(remain)} mcg)`;
+            } else {
+                remainBox.textContent = '';
+            }
             
             // 비용
             const currency = document.getElementById('currencyUnit').value;
@@ -833,8 +822,10 @@
                 const injPerMonth = (iTimes / daysPerPeriod) * 30;
                 const usedMcgPerMonth = injPerMonth * dMcg;
                 const vialsPerMonth = usedMcgPerMonth / totalMcg;
+                
                 let unitPrice = pType === 'kit' ? price/10 : price;
                 let monthlyCost = vialsPerMonth * unitPrice;
+                
                 const symbol = currency === 'KRW' ? '₩' : '$';
                 const formattedCost = currency === 'KRW' ? Math.round(monthlyCost).toLocaleString() : monthlyCost.toFixed(2);
                 
@@ -851,3 +842,7 @@
     </script>
 </body>
 </html>
+
+
+
+
